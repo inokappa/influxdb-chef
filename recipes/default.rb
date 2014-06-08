@@ -12,13 +12,13 @@ execute "install_influxdb" do
   not_if { ::File.exists?("/usr/bin/influxdb") }
 end
 
-%w(httpd vim redhat-lsb-core).each do |sv|
+%w(telnet vim redhat-lsb-core).each do |sv|
   package "#{sv}" do
     action :install
   end
 end
 
-%w(httpd influxdb).each do |sv|
+%w(influxdb).each do |sv|
   service "#{sv}" do
     action [ :start, :enable ]
   end

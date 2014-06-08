@@ -1,0 +1,27 @@
+---
+driver:
+  name: ec2
+  aws_access_key_id: AKXXXXXXXXXXXXXXXXXXXXXX
+  aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  aws_ssh_key_id: keyfile
+  ssh_key: <%= File.expand_path('~/path/to/keyfile') %>
+  security_group_ids: ["sg-1234567"]
+  region: us-east-1
+  availability_zone: us-east-1b
+  require_chef_omnibus: true
+  flavor_id: t1.micro
+
+platforms:
+  - name: centos-6.5
+    driver:
+      image_id: ami-eb6b0182
+      username: root
+
+suites:
+  - name: default
+    run_list:
+      - recipe[chef_handler]
+      - recipe[xml::ruby]
+      - recipe[influxdb::reporting]
+      - recipe[influxdb::default]
+    attributes:
